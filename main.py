@@ -1,15 +1,12 @@
-"""
+ï»¿"""
 PMARS - Personalized Multi-Agent Robotic System
 
 Main entry point for the computational simulation framework.
 """
 
-from pathlib import Path
-
-
 def main():
     print("=" * 60)
-    print("PMARS — Personalized Multi-Agent Robotic System")
+    print("PMARS - Personalized Multi-Agent Robotic System")
     print("=" * 60)
     print()
     print("Research simulation framework initialized.")
