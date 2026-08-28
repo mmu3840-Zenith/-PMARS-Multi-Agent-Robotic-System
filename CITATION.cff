@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: "Hybrid Multi-Agent Robotics with Failure-Aware Nano-Repair Coordination: A Stress-Tested Simulation Study of Swarm–Centralized Integration"
+message: "If you use this software or build upon the associated research, please cite this work."
+type: software
+
+authors:
+  - family-names: "Mukhtar"
+    given-names: "Mohammed"
+
+version: "1.0.0"
+date-released: 2026-08-28
+url: "https://github.com/mmu3840-Zenith/-PMARS-Multi-Agent-Robotic-System"
+
+preferred-citation:
+  type: article
+  title: "Hybrid Multi-Agent Robotics with Failure-Aware Nano-Repair Coordination: A Stress-Tested Simulation Study of Swarm–Centralized Integration"
+  authors:
+    - family-names: "Mukhtar"
+      given-names: "Mohammed"
+  year: 2026
+  journal: "CuriEx"
