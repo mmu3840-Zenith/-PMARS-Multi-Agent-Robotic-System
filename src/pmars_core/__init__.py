@@ -1,4 +1,4 @@
-﻿"""PMARS core: stationary hub and mobile collection robots."""
+"""PMARS core: stationary hub and mobile collection robots."""
 
 from dataclasses import dataclass, field
 from enum import Enum
@@ -158,16 +158,61 @@ class CentralHub:
         )
 
         for task in pending:
-            robots = self.fleet.available_robots()
+            available = self.fleet.available_robots()
 
-            if not robots:
+            if not available:
                 break
 
-            if robots[0].assign(task):
+            closest_robot = min(
+                available,
+                key=lambda robot: (
+                    abs(robot.position[0] - task.item.position[0])
+                    + abs(robot.position[1] - task.item.position[1]),
+                    robot.robot_id,
+                ),
+            )
+
+            if closest_robot.assign(task):
                 assigned += 1
 
         return assigned
+    def handle_robot_failure(self, robot_id: str) -> bool:
+        robot = self.fleet.robots.get(robot_id)
 
+        if robot is None:
+            raise ValueError(f"Unknown robot ID: {robot_id}")
+
+        if robot.status == RobotStatus.UNAVAILABLE:
+            return False
+
+        task = robot.current_task
+
+        if task is not None:
+            if robot.carrying_item is not None:
+                robot.carrying_item.position = robot.position
+                robot.carrying_item.collected = False
+                robot.carrying_item.delivered = False
+
+            task.status = TaskStatus.PENDING
+            task.assigned_robot = None
+
+        robot.current_task = None
+        robot.carrying_item = None
+        robot.status = RobotStatus.UNAVAILABLE
+
+        return True
+
+    def restore_robot(self, robot_id: str) -> bool:
+        robot = self.fleet.robots.get(robot_id)
+
+        if robot is None:
+            raise ValueError(f"Unknown robot ID: {robot_id}")
+
+        if robot.status != RobotStatus.UNAVAILABLE:
+            return False
+
+        robot.status = RobotStatus.IDLE
+        return True
     def step(self) -> None:
         self.dispatch()
 

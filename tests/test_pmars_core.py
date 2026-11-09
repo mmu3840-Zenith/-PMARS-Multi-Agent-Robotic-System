@@ -1,4 +1,4 @@
-﻿import unittest
+import unittest
 
 from src.pmars_core import (
     PMARSSimulation,
@@ -104,3 +104,83 @@ class TestPMARSCore(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class TestPMARSFailureRecovery(unittest.TestCase):
+
+    def test_failed_robot_becomes_unavailable(self):
+        simulation = PMARSSimulation()
+        robot = simulation.add_robot("R001", (1, 1))
+
+        self.assertTrue(
+            simulation.hub.handle_robot_failure("R001")
+        )
+
+        self.assertEqual(robot.status, RobotStatus.UNAVAILABLE)
+
+    def test_failed_task_returns_to_pending(self):
+        simulation = PMARSSimulation()
+        simulation.add_robot("R001", (1, 1))
+        task = simulation.add_item("I001", "electronics", (5, 5))
+
+        simulation.hub.dispatch()
+        simulation.hub.handle_robot_failure("R001")
+
+        self.assertEqual(task.status, TaskStatus.PENDING)
+        self.assertIsNone(task.assigned_robot)
+
+    def test_failed_robot_task_reassigned(self):
+        simulation = PMARSSimulation()
+        simulation.add_robot("R001", (1, 1))
+        replacement = simulation.add_robot("R002", (2, 2))
+
+        task = simulation.add_item("I001", "electronics", (5, 5))
+
+        simulation.hub.dispatch()
+        simulation.hub.handle_robot_failure("R001")
+        simulation.hub.dispatch()
+
+        self.assertEqual(task.assigned_robot, replacement.robot_id)
+        self.assertEqual(task.status, TaskStatus.ASSIGNED)
+
+    def test_failed_robot_carrying_item_recovers_item(self):
+        simulation = PMARSSimulation()
+        robot = simulation.add_robot("R001", (1, 1))
+        task = simulation.add_item("I001", "electronics", (1, 1))
+
+        simulation.hub.dispatch()
+        robot.step(simulation.hub.position)
+
+        self.assertIsNotNone(robot.carrying_item)
+
+        failure_position = robot.position
+        simulation.hub.handle_robot_failure("R001")
+
+        self.assertEqual(task.item.position, failure_position)
+        self.assertFalse(task.item.collected)
+        self.assertIsNone(robot.carrying_item)
+
+    def test_unknown_robot_failure_rejected(self):
+        simulation = PMARSSimulation()
+
+        with self.assertRaises(ValueError):
+            simulation.hub.handle_robot_failure("UNKNOWN")
+
+    def test_robot_can_be_restored(self):
+        simulation = PMARSSimulation()
+        robot = simulation.add_robot("R001", (1, 1))
+
+        simulation.hub.handle_robot_failure("R001")
+        self.assertTrue(simulation.hub.restore_robot("R001"))
+
+        self.assertEqual(robot.status, RobotStatus.IDLE)
+
+    def test_repeated_failure_does_not_repeat_recovery(self):
+        simulation = PMARSSimulation()
+        robot = simulation.add_robot("R001", (1, 1))
+
+        self.assertTrue(
+            simulation.hub.handle_robot_failure("R001")
+        )
+        self.assertFalse(
+            simulation.hub.handle_robot_failure("R001")
+        )

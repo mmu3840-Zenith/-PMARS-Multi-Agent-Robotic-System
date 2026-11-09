@@ -1,0 +1,106 @@
+{
+  "benchmark": {
+    "pmars": {
+      "completion_rate": {
+        "n": 30,
+        "mean": 1.0,
+        "standard_deviation": 0.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "distance": {
+        "n": 30,
+        "mean": 1082.7333333333333,
+        "standard_deviation": 39.94991116759649,
+        "ci95_low": 1068.4374412223442,
+        "ci95_high": 1097.0292254443225
+      },
+      "steps": {
+        "n": 30,
+        "mean": 301.56666666666666,
+        "standard_deviation": 10.549336744417937,
+        "ci95_low": 297.79163499493126,
+        "ci95_high": 305.34169833840207
+      },
+      "blocked_movements": {
+        "n": 30,
+        "mean": 26.166666666666668,
+        "standard_deviation": 5.699868923679424,
+        "ci95_low": 24.126994767576353,
+        "ci95_high": 28.206338565756983
+      },
+      "completed_trials": 30
+    },
+    "greedy": {
+      "completion_rate": {
+        "n": 30,
+        "mean": 1.0,
+        "standard_deviation": 0.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "distance": {
+        "n": 30,
+        "mean": 1092.8,
+        "standard_deviation": 38.89721202667713,
+        "ci95_low": 1078.8808114386327,
+        "ci95_high": 1106.7191885613672
+      },
+      "steps": {
+        "n": 30,
+        "mean": 302.43333333333334,
+        "standard_deviation": 11.279163986301691,
+        "ci95_low": 298.3971363372031,
+        "ci95_high": 306.46953032946357
+      },
+      "blocked_movements": {
+        "n": 30,
+        "mean": 28.633333333333333,
+        "standard_deviation": 7.801340880914632,
+        "ci95_low": 25.841659352214077,
+        "ci95_high": 31.42500731445259
+      },
+      "completed_trials": 30
+    },
+    "random": {
+      "completion_rate": {
+        "n": 30,
+        "mean": 1.0,
+        "standard_deviation": 0.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "distance": {
+        "n": 30,
+        "mean": 1089.6,
+        "standard_deviation": 37.021522165468504,
+        "ci95_low": 1076.3520184352396,
+        "ci95_high": 1102.8479815647602
+      },
+      "steps": {
+        "n": 30,
+        "mean": 301.23333333333335,
+        "standard_deviation": 11.156205427484288,
+        "ci95_low": 297.24113649238745,
+        "ci95_high": 305.22553017427924
+      },
+      "blocked_movements": {
+        "n": 30,
+        "mean": 28.166666666666668,
+        "standard_deviation": 5.819606180142607,
+        "ci95_low": 26.08414734063509,
+        "ci95_high": 30.249185992698244
+      },
+      "completed_trials": 30
+    }
+  },
+  "benchmark_trials": 90,
+  "robustness_trials": 10,
+  "scalability_trials": 36,
+  "limitations": [
+    "Software simulation only",
+    "No physical robot validation",
+    "No real camera-based recognition",
+    "No real wireless communication model"
+  ]
+}

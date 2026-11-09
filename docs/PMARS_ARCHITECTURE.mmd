@@ -1,0 +1,11 @@
+﻿flowchart TD
+    H["Stationary Central Hub"] --> D["Task Dispatcher"]
+    D --> A["Priority / Robot Allocation"]
+    A --> F["Mobile Robot Fleet"]
+    F --> N["A* Navigation"]
+    N --> C["Item Collection"]
+    C --> R["Return to Hub"]
+    R --> S["Category Sorting"]
+    S --> I["Hub Inventory"]
+    F --> M["Robot Health Monitoring"]
+    M --> D

@@ -1,0 +1,11 @@
+completion_rate,delivered,failure_triggered,max_steps_reached,robot_restored,robots_not_parked,seed,steps,total_items,unfinished_tasks
+1.0,12,True,False,True,0,1000,302,12,0
+1.0,12,True,False,True,0,1001,290,12,0
+1.0,12,True,False,True,0,1002,314,12,0
+1.0,12,True,False,True,0,1003,306,12,0
+1.0,12,True,False,True,0,1004,299,12,0
+1.0,12,True,False,True,0,1005,301,12,0
+1.0,12,True,False,True,0,1006,285,12,0
+1.0,12,True,False,True,0,1007,299,12,0
+1.0,12,True,False,True,0,1008,297,12,0
+1.0,12,True,False,True,0,1009,305,12,0
